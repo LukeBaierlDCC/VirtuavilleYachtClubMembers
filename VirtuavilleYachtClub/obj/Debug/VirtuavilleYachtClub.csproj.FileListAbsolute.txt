@@ -1,0 +1,7 @@
+C:\Users\lukee\Desktop\CSharp Projects\Virtuaville Yacht Club Members\VirtuavilleYachtClub\VirtuavilleYachtClub\bin\Debug\VirtuavilleYachtClub.exe.config
+C:\Users\lukee\Desktop\CSharp Projects\Virtuaville Yacht Club Members\VirtuavilleYachtClub\VirtuavilleYachtClub\bin\Debug\VirtuavilleYachtClub.exe
+C:\Users\lukee\Desktop\CSharp Projects\Virtuaville Yacht Club Members\VirtuavilleYachtClub\VirtuavilleYachtClub\bin\Debug\VirtuavilleYachtClub.pdb
+C:\Users\lukee\Desktop\CSharp Projects\Virtuaville Yacht Club Members\VirtuavilleYachtClub\VirtuavilleYachtClub\obj\Debug\VirtuavilleYachtClub.csproj.AssemblyReference.cache
+C:\Users\lukee\Desktop\CSharp Projects\Virtuaville Yacht Club Members\VirtuavilleYachtClub\VirtuavilleYachtClub\obj\Debug\VirtuavilleYachtClub.csproj.CoreCompileInputs.cache
+C:\Users\lukee\Desktop\CSharp Projects\Virtuaville Yacht Club Members\VirtuavilleYachtClub\VirtuavilleYachtClub\obj\Debug\VirtuavilleYachtClub.exe
+C:\Users\lukee\Desktop\CSharp Projects\Virtuaville Yacht Club Members\VirtuavilleYachtClub\VirtuavilleYachtClub\obj\Debug\VirtuavilleYachtClub.pdb
