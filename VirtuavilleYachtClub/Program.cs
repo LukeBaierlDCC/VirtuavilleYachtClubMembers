@@ -24,7 +24,8 @@ namespace VirtuavilleYachtClub
                 new Member("Luka", "Owner of Hootin Tootin Guten Gluten", 5),
             };
 
-            while (true)
+            bool quit = false;
+            while (!quit)
             {
                 Console.WriteLine("Welcome to Virtuaville Yacht Club Members!");
                 Console.WriteLine("Please select an option:");
@@ -32,54 +33,129 @@ namespace VirtuavilleYachtClub
                 Console.WriteLine("2. Search by number of years");
                 Console.WriteLine("3. Search by name");
                 Console.WriteLine("4. Search by occupation");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. Update member's years of membership");
+                Console.WriteLine("6. Quit");
 
-                string input = Console.ReadLine();
-                Console.WriteLine();
+                string userInput = Console.ReadLine();
+                int selection;
 
-                switch (input)
+                try
+                {
+                    selection = Convert.ToInt32(userInput);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid input. Please enter a number.");
+                    continue;
+                }
+                //Console.WriteLine();
+
+                switch (userInput)
                 {
                     case "1":
-                        DisplayMembers(members);
+                        // Browse all members
+                        foreach (Member member in members)
+                        {
+                            Console.WriteLine(member);
+                        }
                         break;
 
                     case "2":
-                        Console.WriteLine("Please enter number of years:");
-                        try
+                        // Search by number of years as a member
+                        Console.WriteLine("Enter the number of years:");
+                        int yearsOfMembership = int.Parse(Console.ReadLine());
+
+                        IEnumerable<Member> membersByYears = members.Where(m => m.YearsOfMembership == yearsOfMembership);
+                        if (membersByYears.Any())
                         {
-                            int years = int.Parse(Console.ReadLine());
-                            var matchingMembers = members.Where(m => m.YearsOfMembership == years).ToList();
-                            DisplayMembers(matchingMembers);
+                            foreach (Member member in membersByYears)
+                            {
+                                Console.WriteLine(member);
+                            }
                         }
-                        catch (Exception)
+                        else
                         {
-                            Console.WriteLine("Invalid input. Please enter a number.");
+                            Console.WriteLine("No members found.");
                         }
                         break;
 
                     case "3":
-                        Console.WriteLine("Please enter name:");
+                        // Search by name
+                        Console.WriteLine("Enter the name:");
                         string name = Console.ReadLine();
-                        var matchingMemberByName = members.Where(m => m.Name.ToLower().Contains(name.ToLower())).ToList();
-                        DisplayMembers(matchingMemberByName);
+
+                        IEnumerable<Member> membersByName = members.Where(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                        if (membersByName.Any())
+                        {
+                            foreach (Member member in membersByName)
+                            {
+                                Console.WriteLine(member);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No members found.");
+                        }
                         break;
 
                     case "4":
-                        Console.WriteLine("Please enter occupation:");
+                        // Search by occupation
+                        Console.WriteLine("Enter the occupation:");
                         string occupation = Console.ReadLine();
-                        var matchingMemberByOccupation = members.Where(m => m.Occupation.ToLower().Contains(occupation.ToLower())).ToList();
-                        DisplayMembers(matchingMemberByOccupation);
+
+                        IEnumerable<Member> membersByOccupation = members.Where(m => m.Occupation.Equals(occupation, StringComparison.OrdinalIgnoreCase));
+                        if (membersByOccupation.Any())
+                        {
+                            foreach (Member member in membersByOccupation)
+                            {
+                                Console.WriteLine(member);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No members found.");
+                        }
                         break;
 
                     case "5":
-                        Console.WriteLine("Thank you for using Virtuaville Yacht Club Members.");
-                        return;
+                        // Update member's years of membership
+                        Console.WriteLine("Enter the name of the member to update:");
+                        string nameToUpdate = Console.ReadLine();
+
+                        Member memberToUpdate = members.FirstOrDefault(m => m.Name.Equals(nameToUpdate, StringComparison.OrdinalIgnoreCase));
+
+                        if (memberToUpdate == null)
+                        {
+                            Console.WriteLine("Member not found.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Enter the new number of years of membership for {memberToUpdate.Name}:");
+                            int newYearsOfMembership = 0;
+                            if (int.TryParse(Console.ReadLine(), out newYearsOfMembership))
+                            {
+                                memberToUpdate.UpdateYearsOfMembership(newYearsOfMembership);
+                                Console.WriteLine($"{memberToUpdate.Name}'s years of membership have been updated to {memberToUpdate.YearsOfMembership}.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Please enter a valid number of years of membership.");
+                            }
+                        }
+                        break;
+
+                    case "6":
+                        // Quit the program
+                        quit = true;
+                        break;
 
                     default:
+                        // Invalid input
                         Console.WriteLine("Invalid input. Please try again.");
                         break;
                 }
 
+                // Wait for the user to press a key to continue
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 Console.Clear();
@@ -89,7 +165,7 @@ namespace VirtuavilleYachtClub
         static void DisplayMembers(List<Member> members)
         {
             Console.WriteLine("Name\t\t\t\tOccupation\t\tYears");
-            Console.WriteLine("--------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------");
             foreach (var member in members)
             {
                 Console.WriteLine($"{member.Name}\t\t{member.Occupation}\t\t{member.YearsOfMembership}");
