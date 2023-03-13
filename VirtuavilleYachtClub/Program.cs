@@ -10,44 +10,90 @@ namespace VirtuavilleYachtClub
     {
         static void Main(string[] args)
         {
-            List<Member> members = new List<Member>
-        {
-            new Member { Name = "Luke the Kook", Occupation = "CEO of the Radio Tower of Power", Years = 3 },
-            new Member { Name = "Skipper the Synthwave Schipperke", Occupation = "DJ at WASD FM", Years = 2 },
-            new Member { Name = "NeonZero", Occupation = "CEO Advisor", Years = 2 },
-            new Member { Name = "Elyse De Rochelle", Occupation = "Owner of Rochelle Oil Industry", Years = 4 },
-            new Member { Name = "Bill the Chill", Occupation = "DJ at WASD FM", Years = 2 },
-            new Member { Name = "Malcolm Jr", Occupation = "DJ at WASD FM", Years = 1 },
-            new Member { Name = "Shellie the Star-riding Sheltie", Occupation = "House-pet and girlfriend to Skipper", Years = 1 },
-            new Member { Name = "Chipster the Chiptune Chipmunk", Occupation = "Acorn collector and music connoisseur", Years = 1 },
-            new Member { Name = "Klaus", Occupation = "Owner of Hootin Tootin Guten Gluten", Years = 5 },
-            new Member { Name = "Luka", Occupation = "Owner of Hootin Tootin Guten Gluten", Years = 5 }
-        };
-
-            // Prompt the user for a search term
-            Console.WriteLine("Please enter a search term: ");
-            string searchTerm = Console.ReadLine();
-
-            // Query the list of members by name, occupation, and years
-            var query = from member in members
-                        where member.Name.Contains(searchTerm) || member.Years.ToString().Contains(searchTerm)
-                        orderby member.Name
-                        select new
-                        {
-                            Name = member.Name,
-                            Occupation = member.Occupation,
-                            Years = member.Years
-                        };
-
-            // Print the results
-            Console.WriteLine("Results: ");
-            foreach (var result in query)
+            var members = new List<Member>()
             {
-                Console.WriteLine($"{result.Name}, {result.Occupation}, {result.Years} years Virtuaville Yacht Club member");
-            }
+                new Member("Luke the Kook", "CEO of the Radio Tower of Power", 3),
+                new Member("Skipper the Synthwave Schipperke", "DJ at WASD FM", 2),
+                new Member("NeonZero", "CEO Advisor", 2),
+                new Member("Elyse De Rochelle", "Owner of Rochelle Oil Industry", 4),
+                new Member("Bill the Chill", "DJ at WASD FM", 2),
+                new Member("Malcolm Jr", "DJ at WASD FM", 1),
+                new Member("Shellie the Star-riding Sheltie", "House-pet and girlfriend to Skipper", 1),
+                new Member("Chipster the Chiptune Chipmunk", "Acorn collector and music connoisseur", 1),
+                new Member("Klaus", "Owner of Hootin Tootin Guten Gluten", 5),
+                new Member("Luka", "Owner of Hootin Tootin Guten Gluten", 5),
+            };
 
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadKey();
+            while (true)
+            {
+                Console.WriteLine("Welcome to Virtuaville Yacht Club Members!");
+                Console.WriteLine("Please select an option:");
+                Console.WriteLine("1. Browse all members");
+                Console.WriteLine("2. Search by number of years");
+                Console.WriteLine("3. Search by name");
+                Console.WriteLine("4. Search by occupation");
+                Console.WriteLine("5. Exit");
+
+                string input = Console.ReadLine();
+                Console.WriteLine();
+
+                switch (input)
+                {
+                    case "1":
+                        DisplayMembers(members);
+                        break;
+
+                    case "2":
+                        Console.WriteLine("Please enter number of years:");
+                        try
+                        {
+                            int years = int.Parse(Console.ReadLine());
+                            var matchingMembers = members.Where(m => m.YearsOfMembership == years).ToList();
+                            DisplayMembers(matchingMembers);
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Invalid input. Please enter a number.");
+                        }
+                        break;
+
+                    case "3":
+                        Console.WriteLine("Please enter name:");
+                        string name = Console.ReadLine();
+                        var matchingMemberByName = members.Where(m => m.Name.ToLower().Contains(name.ToLower())).ToList();
+                        DisplayMembers(matchingMemberByName);
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Please enter occupation:");
+                        string occupation = Console.ReadLine();
+                        var matchingMemberByOccupation = members.Where(m => m.Occupation.ToLower().Contains(occupation.ToLower())).ToList();
+                        DisplayMembers(matchingMemberByOccupation);
+                        break;
+
+                    case "5":
+                        Console.WriteLine("Thank you for using Virtuaville Yacht Club Members.");
+                        return;
+
+                    default:
+                        Console.WriteLine("Invalid input. Please try again.");
+                        break;
+                }
+
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+
+        static void DisplayMembers(List<Member> members)
+        {
+            Console.WriteLine("Name\t\t\t\tOccupation\t\tYears");
+            Console.WriteLine("--------------------------------------------------");
+            foreach (var member in members)
+            {
+                Console.WriteLine($"{member.Name}\t\t{member.Occupation}\t\t{member.YearsOfMembership}");
+            }
         }
     }
 }

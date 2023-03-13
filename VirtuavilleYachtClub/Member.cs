@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace VirtuavilleYachtClub
 {
-    class Member
+    public class Member
     {
         public string Name { get; set; }
         public string Occupation { get; set; }
-        public int Years { get; set; }
+        public int YearsOfMembership { get; set; }
+
+        public Member(string name, string occupation, int yearsOfMembership)
+        {
+            Name = name;
+            Occupation = occupation;
+            YearsOfMembership = yearsOfMembership;
+        }
     }
 }
